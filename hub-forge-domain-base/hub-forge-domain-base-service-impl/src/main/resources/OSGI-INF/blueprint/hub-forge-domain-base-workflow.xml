@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:jpa="http://aries.apache.org/xmlns/jpa/v1.0.0"
+           xmlns:tx="http://aries.apache.org/xmlns/transactions/v1.0.0"
+           xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0"
+           xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           default-activation="lazy">
+
+	<type-converters>
+     	<bean id="classPathConverter" class="com.jeet.hub.forge.domain.base.service.impl.activiti.ResourceConverter"/>
+    </type-converters>
+
+	<reference id="transactionManager" interface="javax.transaction.TransactionManager"/>
+
+	<reference id="dataSource" interface="javax.sql.DataSource"/>
+
+  	<bean id="testBean" class="com.jeet.hub.forge.domain.base.service.impl.activiti.TestBean">
+  		<tx:transaction method="*" value="Required"/>
+  		<property name="forgeService" ref="forgeService"/>
+    </bean>
+  	<service ref="testBean" interface="com.jeet.hub.forge.domain.base.service.api.TestBeanInterface" />
+
+    <!-- Forge -->
+	<bean id="processEngineConfiguration" class="com.jeet.hub.forge.domain.base.service.impl.activiti.OsgiProcessEngineConfiguration" >
+		<property name="dataSourceOsgi" ref="dataSource" />
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="databaseSchemaUpdateOsgi" value="true" />
+		<property name="jobExecutorActivateOsgi" value="true" />
+		<jpa:unit property="jpaEntityManagerFactoryOsgi" unitname="jeet-core-pu" />
+		<property name="jpaHandleTransactionOsgi" value="true" />
+		<property name="jpaCloseEntityManagerOsgi" value="true" />
+		<property name="deploymentResources">
+			<list>
+				<value>classpath:process/test.bpmn20.xml</value>
+			</list>
+		</property>
+		<!-- <property name="mailServerHost" value="${mail.host}" />
+		<property name="mailServerPort" value="${mail.port}" />
+		<property name="mailServerUsername" value="${mail.username}" />
+		<property name="mailServerPassword" value="${mail.password}" />
+		<property name="mailServerUseTLS" value="${mail.smtp.starttls.enable}" />
+		<property name="mailServerDefaultFrom" value="${mail.default.from}" /> -->
+	</bean>
+	
+	<bean id="processEngineFactory" class="org.activiti.osgi.blueprint.ProcessEngineFactoryWithELResolver" init-method="init"
+          destroy-method="destroy">
+		<property name="processEngineConfiguration" ref="processEngineConfiguration" />
+		<property name="bundle" ref="blueprintBundle"/>
+		<property name="blueprintELResolver" ref="blueprintELResolver"/>
+		<property name="blueprintContextELResolver" ref="blueprintContextELResolver"/>
+	</bean>
+	
+	<reference-list id="activityProviders" availability="optional" 
+      interface="org.activiti.engine.delegate.JavaDelegate"
+      activation="eager">
+      <reference-listener ref="blueprintELResolver" bind-method="bindService" unbind-method="unbindService"/>
+  </reference-list>
+	
+	<bean id="blueprintELResolver" class="org.activiti.osgi.blueprint.BlueprintELResolver" />
+	
+	 <bean id="blueprintContextELResolver" 
+              class="org.activiti.osgi.blueprint.BlueprintContextELResolver">
+            <property name="blueprintContainer" ref="blueprintContainer"/>
+          </bean>
+	
+	
+    <bean id="processEngine" factory-ref="processEngineFactory" factory-method="getObject"/>
+	
+	<bean id="runtimeService" factory-ref="processEngine"
+		factory-method="getRuntimeService"/>
+	<service ref="runtimeService" interface="org.activiti.engine.RuntimeService"/>
+		
+	<bean id="taskService" factory-ref="processEngine"
+		factory-method="getTaskService"/>
+	<bean id="identityService" factory-ref="processEngine"
+		factory-method="getIdentityService"/>	
+	
+</blueprint>            

@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.jeet.hub.forge.domain.base</groupId>
+		<artifactId>jeet-hub-forge-domain-base-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../jeet-hub-forge-domain-base-parent/pom.xml</relativePath>
+	</parent>
+	<artifactId>jeet-hub-forge-domain-base-service-api</artifactId>
+	<packaging>jar</packaging>
+	<name>jeet-hub-forge-domain-base-service-api</name>
+	<dependencies>
+		<dependency>
+			<groupId>com.jeet.domain.base</groupId>
+			<artifactId>jeet-domain-base-service-api</artifactId>
+			<version>${jeet.domain.base.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jeet.hub.forge.domain.base</groupId>
+			<artifactId>jeet-hub-forge-domain-base-model</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<resources>
+			<!-- Les sources sont directement intégrées au JAR , afin de bénéficier 
+				du refresh des classes du domainmodel en mode shell GWT -->
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.java</include>
+					<include>**/*.gwt.xml</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
+		<plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>manifest</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Export-Package>com.jeet.hub.forge.domain.base.service.api.*</Export-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+	</build>
+</project>

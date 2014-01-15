@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="jeet-hub-forge-domain-base-features">
+    <feature name="jeet-hub-forge-domain-base-feature" description="jeet-hub-forge-domain-base-feature">
+        <feature>jeet-domain-base-feature</feature>
+        
+        <!--Temporary-->
+        <bundle>mvn:com.jeet.hub.domain.base/jeet-hub-domain-base-model/${jeet.hub.domain.base.version}</bundle>
+
+        <bundle>mvn:com.jeet.hub.forge.domain.base/jeet-hub-forge-domain-base-model/${project.version}</bundle>
+        <bundle>mvn:com.jeet.hub.forge.domain.base/jeet-hub-forge-domain-base-service-api/${project.version}</bundle>
+        <bundle>mvn:com.jeet.hub.forge.domain.base/jeet-hub-forge-domain-base-service-impl/${project.version}</bundle>
+        <bundle>mvn:com.jeet.hub.forge.domain.base/jeet-hub-forge-domain-base-command/${project.version}</bundle>
+
+    </feature>
+    
+    <feature name="jeet-hub-forge-domain-base-test-feature" description="jeet-hub-forge-domain-party-feature">
+        <feature>jeet-domain-base-feature</feature>
+        <feature>jeet-domain-base-test-feature</feature>
+        
+        <bundle>wrap:mvn:postgresql/postgresql/${postgresql.version}</bundle>
+		<bundle>mvn:com.jeet.hub.domain.base/jeet-hub-domain-base-model/${jeet.hub.domain.base.version}</bundle>
+
+        <bundle>assembly:file:///${basedir}/../hub-forge-domain-base-model/target/classes</bundle>
+        <bundle>assembly:file:///${basedir}/../hub-forge-domain-base-service-api/target/classes</bundle>
+        <bundle>assembly:file:///${basedir}/../hub-forge-domain-base-service-impl/target/classes</bundle>
+        <bundle>assembly:file:///${basedir}/../hub-forge-domain-base-test-integration/target/classes</bundle>
+        <bundle>assembly:file:///${basedir}/../hub-forge-domain-base-command/target/classes</bundle>
+    </feature>
+    
+    <feature name="activiti" description="Activiti feature">
+		<bundle>mvn:org.activiti/activiti-engine/5.14</bundle>
+    	<bundle>mvn:org.activiti/activiti-osgi/5.14</bundle>
+    	<bundle>mvn:org.activiti/activiti-bpmn-converter/5.14</bundle>
+    	<bundle>mvn:org.activiti/activiti-bpmn-model/5.14</bundle>
+    	
+    	<bundle>mvn:org.javassist/javassist/3.17.1-GA</bundle>
+	    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.mybatis/3.2.2_1</bundle>
+	    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.drools/5.5.0.Final_2</bundle>
+	    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.antlr/2.7.7_4</bundle>
+    
+    	<bundle>mvn:joda-time/joda-time/2.1</bundle>
+    	<bundle>mvn:com.fasterxml.uuid/java-uuid-generator/3.1.2</bundle>
+	    <bundle>mvn:javax.mail/mail/1.4.3</bundle>
+    	<bundle>mvn:org.codehaus.groovy/groovy/1.7.5</bundle>
+    </feature>
+</features>

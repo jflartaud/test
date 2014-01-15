@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- Forge -->
+	<bean id="forgeService" class="com.jeet.hub.forge.service.impl.forge.ForgeServiceImpl" autowire="no">
+		<property name="forgeRepository" ref="forgeRepository"/>
+	</bean>
+	<bean id="forgeInstanceService"
+		class="com.jeet.hub.forge.service.impl.forge.ForgeInstanceServiceImpl" autowire="no">
+		<property name="forgeInstanceRepository" ref="forgeInstanceRepository"/>
+	</bean>
+
+	<!-- ForgeElement -->
+	<bean id="forgeElementService"
+		class="com.jeet.hub.forge.service.impl.forge.element.ForgeElementServiceImpl" autowire="no">
+		<property name="forgeElementRepository" ref="forgeElementRepository"/>
+	</bean>
+
+	<!-- ForgeProject -->
+	<bean id="forgeProjectService"
+		class="com.jeet.hub.forge.service.impl.forge.project.ForgeProjectServiceImpl" autowire="no">
+		<property name="forgeProjectRepository" ref="forgeProjectRepository"/>
+		<property name="forgeInstanceService" ref="forgeInstanceService"/>
+		<property name="forgeProjectVersionService" ref="forgeProjectVersionService"/>
+	</bean>
+	
+	<bean id="forgeProjectModuleService" class="com.jeet.hub.forge.service.impl.forge.project.ForgeProjectModuleServiceImpl" autowire="no">
+		<property name="forgeProjectModuleRepository" ref="forgeProjectModuleRepository"/>
+	</bean>
+	
+	<bean id="forgeTechnicalComponentService" class="com.jeet.hub.forge.service.impl.forge.project.ForgeTechnicalComponentServiceImpl" autowire="no">
+		<property name="forgeTechnicalComponentRepository" ref="forgeTechnicalComponentRepository"/>
+	</bean>
+
+	<bean id="forgeProjectVersionService"
+		class="com.jeet.hub.forge.service.impl.forge.project.version.ForgeProjectVersionServiceImpl" autowire="no">
+		<property name="forgeProjectVersionRepository" ref="forgeProjectVersionRepository"/>
+	</bean>
+	
+	<bean id="forgeProjectVersionModuleService" class="com.jeet.hub.forge.service.impl.forge.project.version.ForgeProjectVersionModuleServiceImpl" autowire="no">
+		<property name="forgeProjectModuleService" ref="forgeProjectModuleService"/>
+	</bean>
+	
+	<!-- ForgeProjectRule -->
+	<bean id="forgeProjectRuleService" class="com.jeet.hub.forge.service.impl.forge.project.rule.ForgeProjectRuleServiceImpl" autowire="no">
+		<property name="forgeProjectRuleRepository" ref="forgeProjectRuleRepository"/>
+	</bean>
+	
+	<!-- ForgeProject items service -->
+	<bean id="itemUniqueIdentifierService"
+		class="com.jeet.hub.forge.service.impl.forge.project.item.ItemUniqueIdentifierServiceImpl"
+		autowire="no">
+		<property name="itemUniqueIdentifierRepository" ref="itemUniqueIdentifierRepository" />
+	</bean>
+	
+	
+	<!-- Mailing -->
+	<bean id="mailService"
+		class="com.jeet.hub.forge.service.impl.mail.MailServiceHtmlImpl"
+		autowire="no">
+		<property name="mailSender" ref="mailSender" />
+	</bean>
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"
+		autowire="no">
+		<property name="host" value="${mail.host}" />
+		<property name="port" value="${mail.port}" />
+		<property name="username" value="${mail.username}" />
+		<property name="password" value="${mail.password}" />
+		<property name="defaultEncoding" value="${mail.default.encoding}" />
+		<property name="javaMailProperties">
+			<props>
+				<!-- Use SMTP transport protocol -->
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
+				<prop key="mail.smtp.starttls.enable">${mail.smtp.starttls.enable}</prop>
+				<prop key="mail.smtp.from">${mail.default.from}</prop>
+				<prop key="mail.debug">${mail.debug}</prop>
+			</props>
+		</property>
+	</bean>
+
+</beans>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.jeet.hub.forge.domain.base</groupId>
+	<artifactId>jeet-hub-forge-domain-base</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>Jeet Hub Forge Domain Base</name>
+	<description>Jeet Hub Forge project</description>
+	<properties>
+		<maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
+	</properties>
+	<scm>
+		<developerConnection>scm:svn:https://jeet.jeetconsulting.com/svn/jeet/trunk/jeet-hub-forge</developerConnection>
+	</scm>
+	<modules>
+		<module>hub-forge-domain-base-parent</module>
+		<module>hub-forge-domain-base-model</module>
+		<module>hub-forge-domain-base-service-api</module>
+		<module>hub-forge-domain-base-service-impl</module>
+        <module>hub-forge-domain-base-command</module>
+        <module>hub-forge-domain-base-feature</module>
+        <module>hub-forge-domain-base-test-integration</module>
+	</modules>
+
+</project>

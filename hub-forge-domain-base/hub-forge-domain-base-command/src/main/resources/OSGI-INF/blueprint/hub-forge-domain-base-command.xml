@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<command-bundle xmlns="http://karaf.apache.org/xmlns/shell/v1.0.0">
+		<command name="hub-forge/forge-add">
+			<action class="com.jeet.hub.forge.domain.base.command.forge.AddForgeCommand">
+				<property name="forgeService" ref="forgeService" />
+			</action>
+		</command>
+	</command-bundle>
+
+	<reference id="forgeService"
+		interface="com.jeet.hub.forge.domain.base.service.api.ForgeService" />
+
+
+</blueprint>

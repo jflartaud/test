@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.jeet.hub.forge.domain.base</groupId>
+		<artifactId>jeet-hub-forge-domain-base-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../jeet-hub-forge-domain-base-parent/pom.xml</relativePath>
+	</parent>
+	<artifactId>jeet-hub-forge-domain-base-feature</artifactId>
+	<packaging>pom</packaging>
+	<name>jeet-hub-forge-domain-base-feature</name>
+	<dependencies>
+		<dependency>
+			<groupId>com.jeet.domain.base</groupId>
+			<artifactId>jeet-domain-base-feature</artifactId>
+			<version>${jeet.domain.base.version}</version>
+			<type>xml</type>
+			<classifier>features</classifier>
+		</dependency>
+
+
+		<!-- Dependencies for the feature only -->
+		<dependency>
+			<groupId>org.apache.servicemix.bundles</groupId>
+			<artifactId>org.apache.servicemix.bundles.mybatis</artifactId>
+			<version>3.2.2_1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.servicemix.bundles</groupId>
+			<artifactId>org.apache.servicemix.bundles.drools</artifactId>
+			<version>5.5.0.Final_2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.servicemix.bundles</groupId>
+			<artifactId>org.apache.servicemix.bundles.antlr</artifactId>
+			<version>2.7.7_4</version>
+		</dependency>
+	</dependencies>
+	<repositories>
+		<!-- Repository for transitive dependencies for the feature only -->
+		<repository>
+			<id>thirdparty-releases</id>
+			<name>JBoss Thirdparty Releases</name>
+			<url>https://repository.jboss.org/nexus/content/repositories/thirdparty-releases</url>
+		</repository>
+	</repositories>
+	<build>
+		<resources>
+			<!-- Les sources sont directement intégrées au JAR , afin de bénéficier 
+				du refresh des classes du domainmodel en mode shell GWT -->
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.java</include>
+					<include>**/*.gwt.xml</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.apache.karaf.tooling
+										</groupId>
+										<artifactId>
+											karaf-maven-plugin
+										</artifactId>
+										<versionRange>
+											[3.0.0-SNAPSHOT,)
+										</versionRange>
+										<goals>
+											<goal>
+												features-generate-descriptor
+											</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<property>
+					<name>env</name>
+					<value>dev</value>
+				</property>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.karaf.tooling</groupId>
+						<artifactId>karaf-maven-plugin</artifactId>
+						<version>3.0.0-SNAPSHOT</version>
+						<extensions>true</extensions>
+						<configuration>
+							<addBundlesToPrimaryFeature>false</addBundlesToPrimaryFeature>
+							<inputFile>${basedir}/src/main/feature/feature-dev.xml</inputFile>
+						</configuration>
+						<executions>
+							<execution>
+								<id>generate</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>features-generate-descriptor</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>

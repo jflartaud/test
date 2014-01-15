@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="jeet-hub-forge-domain-base-features">
+    <feature name="jeet-hub-forge-domain-base-feature" description="jeet-hub-forge-domain-base-feature">
+        <!--Temporary-->
+        <bundle>mvn:com.jeet.hub.domain.base/jeet-hub-domain-base-model/1.0.0-SNAPSHOT</bundle>
+
+        <bundle>mvn:com.jeet.hub.forge.domain.base/jeet-hub-forge-domain-base-model/1.0.0-SNAPSHOT</bundle>
+        <bundle>mvn:com.jeet.hub.forge.domain.base/jeet-hub-forge-domain-base-service-api/1.0.0-SNAPSHOT</bundle>
+        <bundle>mvn:com.jeet.hub.forge.domain.base/jeet-hub-forge-domain-base-service-impl/1.0.0-SNAPSHOT</bundle>
+        <bundle>mvn:com.jeet.hub.forge.domain.base/jeet-hub-forge-domain-base-command/1.0.0-SNAPSHOT</bundle>
+
+    </feature>
+</features>

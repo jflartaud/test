@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0">
+
+	<persistence-unit name="jeet-core-pu" transaction-type="JTA">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<jta-data-source>osgi:service/javax.sql.DataSource/(osgi.jndi.service.name=jdbc/db)</jta-data-source>
+        <!-- Party -->
+        <class>com.jeet.domain.party.model.party.Party</class>
+
+        <!-- Organization -->
+        <class>com.jeet.domain.party.model.party.organization.Organization</class>
+        <class>com.jeet.domain.party.model.party.organization.InformalOrganization</class>
+        <class>com.jeet.domain.party.model.party.organization.LegalOrganization</class>
+        <class>com.jeet.domain.party.model.party.organization.Group</class>
+
+        <!-- Person -->
+        <class>com.jeet.domain.party.model.party.person.Person</class>
+
+        <!-- Role -->
+        <class>com.jeet.domain.party.model.role.Role</class>
+        <class>com.jeet.domain.party.model.role.RelationshipRole</class>
+        <class>com.jeet.domain.party.model.role.Manager</class>
+        <class>com.jeet.domain.party.model.role.Employee</class>
+        <class>com.jeet.domain.party.model.role.group.GroupManagerRole</class>
+        <class>com.jeet.domain.party.model.role.group.GroupMemberRole</class>
+
+        <!-- Contact -->
+        <class>com.jeet.domain.party.model.contact.Contact</class>
+        <class>com.jeet.domain.party.model.contact.PostalAddress</class>
+        <class>com.jeet.domain.party.model.contact.MailAddress</class>
+        <class>com.jeet.domain.party.model.contact.Phone</class>
+
+        <!-- Account -->
+        <class>com.jeet.domain.party.model.account.PartyAccount</class>
+        <class>com.jeet.domain.party.model.account.DatabaseAccount</class>
+        <class>com.jeet.domain.party.model.account.LDAPAccount</class>
+
+		<!-- Software -->
+		<class>com.jeet.hub.domain.base.model.component.technical.SoftwareProject</class>
+        <class>com.jeet.hub.domain.base.model.component.technical.SoftwareComponent</class>
+        <class>com.jeet.hub.domain.base.model.component.technical.TechnicalComponent</class>
+
+       <!-- Forge -->
+		<class>com.jeet.hub.forge.domain.base.model.Forge</class>
+		<class>com.jeet.hub.forge.domain.base.model.ForgeInstance</class>
+		
+		<!-- Forge elements -->
+		<class>com.jeet.hub.forge.domain.base.model.element.ForgeElement</class>
+		
+		<!-- Forge project -->
+		<class>com.jeet.hub.forge.domain.base.model.project.ForgeProject</class>
+		<class>com.jeet.hub.forge.domain.base.model.project.ForgeProjectModule</class>
+		<class>com.jeet.hub.forge.domain.base.model.project.version.ForgeProjectVersion</class>
+		<class>com.jeet.hub.forge.domain.base.model.project.version.ForgeProjectBranch</class>
+		<class>com.jeet.hub.forge.domain.base.model.project.version.ForgeProjectTag</class>
+		<class>com.jeet.hub.forge.domain.base.model.project.activity.ForgeProjectActivity</class>
+		
+		<!-- Forge project items -->
+		<class>com.jeet.hub.forge.domain.base.model.project.item.ForgeProjectCodeActivityItem</class>
+		<class>com.jeet.hub.forge.domain.base.model.project.item.ForgeProjectCodeActivityPack</class>
+		<class>com.jeet.hub.forge.domain.base.model.project.item.ItemUniqueIdentifier</class>
+		
+		<!-- Forge project rule -->
+		<class>com.jeet.hub.forge.domain.base.model.project.rule.ForgeProjectRule</class>
+		<class>com.jeet.hub.forge.domain.base.model.project.rule.ProjectCommitFilePatternRule</class>
+		
+		<!-- Forge project task -->
+		<class>com.jeet.hub.forge.domain.base.model.project.rule.task.ForgeProjectTask</class>
+		<class>com.jeet.hub.forge.domain.base.model.project.rule.task.ProjectModuleSynchronizerTask</class>
+
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<property name="eclipselink.target-database" value="PostgreSQL" />		
+			<property name="eclipselink.logging.level" value="OFF" />
+			<property name="eclipselink.logging.level.sql" value="OFF" />
+			<property name="eclipselink.logging.parameters" value="true" />
+			<property name="eclipselink.logging.timestamp" value="true" />
+			<property name="eclipselink.logging.session" value="true" />
+			<property name="eclipselink.logging.thread" value="true" />
+			<property name="eclipselink.logging.exceptions" value="true" />
+			<property name="eclipselink.session.include.descriptor.queries"
+				value="true" />
+			<property name="eclipselink.transaction.join-existing"
+				value="" />
+			<property name="eclipselink.target-server"
+				value="com.jeet.domain.base.service.repository.jpa.OSGiTSServer" />
+
+			<!-- <property name ="eclipselink.logging.logger" value="com.github.lburgazzoli.examples.karaf.jpa.eclipselink.EclipseLinkSessionLogger"/> 
+				<property name ="eclipselink.session-event-services" value="com.github.lburgazzoli.examples.karaf.jpa.eclipselink.EclipseLinkSessionEventListener"/> -->
+
+			<property name="eclipselink.weaving" value="false" />
+			<property name="eclipselink.ddl-generation" value="create-tables" />
+			<property name="eclipselink.ddl-generation.output-mode"
+				value="database" />
+
+		</properties>
+
+	</persistence-unit>
+</persistence>

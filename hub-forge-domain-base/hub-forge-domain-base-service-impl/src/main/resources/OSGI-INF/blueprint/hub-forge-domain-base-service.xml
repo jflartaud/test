@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:jpa="http://aries.apache.org/xmlns/jpa/v1.0.0"
+           xmlns:tx="http://aries.apache.org/xmlns/transactions/v1.0.0"
+           xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0"
+           xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           default-activation="lazy">
+
+    <!-- Forge -->
+	<bean id="forgeService" class="com.jeet.hub.forge.domain.base.service.impl.ForgeServiceImpl">
+		<tx:transaction method="*" value="Required"/>
+		<property name="forgeRepository" ref="forgeRepository"/>
+	</bean>
+	<service ref="forgeService" interface="com.jeet.hub.forge.domain.base.service.api.ForgeService" />
+	
+	
+	<bean id="forgeInstanceService"
+		class="com.jeet.hub.forge.domain.base.service.impl.ForgeInstanceServiceImpl">
+		 <tx:transaction method="*" value="Required"/>
+		 <property name="forgeInstanceRepository" ref="forgeInstanceRepository"/>
+	</bean>
+	<service ref="forgeInstanceService" interface="com.jeet.hub.forge.domain.base.service.api.ForgeInstanceService" />
+
+	<!-- ForgeElement -->
+	<bean id="forgeElementService"
+		class="com.jeet.hub.forge.domain.base.service.impl.element.ForgeElementServiceImpl">
+		 <tx:transaction method="*" value="Required"/>
+		<property name="forgeElementRepository" ref="forgeElementRepository"/>
+	</bean>
+	<service ref="forgeElementService" interface="com.jeet.hub.forge.domain.base.service.api.element.ForgeElementService" />
+
+	<!-- ForgeProject -->
+	<bean id="forgeProjectService"
+		class="com.jeet.hub.forge.domain.base.service.impl.project.ForgeProjectServiceImpl">
+		<tx:transaction method="*" value="Required"/>
+		<property name="forgeProjectRepository" ref="forgeProjectRepository"/>
+		<property name="forgeInstanceService" ref="forgeInstanceService"/>
+		<property name="forgeProjectVersionService" ref="forgeProjectVersionService"/>
+	</bean>
+	<service ref="forgeProjectService" interface="com.jeet.hub.forge.domain.base.service.api.project.ForgeProjectService" />
+	
+	
+	<bean id="forgeProjectModuleService" class="com.jeet.hub.forge.domain.base.service.impl.project.ForgeProjectModuleServiceImpl">
+		<tx:transaction method="*" value="Required"/>
+		<property name="forgeProjectModuleRepository" ref="forgeProjectModuleRepository"/>
+	</bean>
+	<service ref="forgeProjectModuleService" interface="com.jeet.hub.forge.domain.base.service.api.project.ForgeProjectModuleService" />
+	
+	<bean id="forgeTechnicalComponentService" class="com.jeet.hub.forge.domain.base.service.impl.project.ForgeTechnicalComponentServiceImpl">
+		<tx:transaction method="*" value="Required"/>
+		<property name="forgeTechnicalComponentRepository" ref="forgeTechnicalComponentRepository"/>
+	</bean>
+	<service ref="forgeTechnicalComponentService" interface="com.jeet.hub.forge.domain.base.service.api.project.ForgeTechnicalComponentService" />
+
+	<bean id="forgeProjectVersionService"
+		class="com.jeet.hub.forge.domain.base.service.impl.project.version.ForgeProjectVersionServiceImpl">
+		<tx:transaction method="*" value="Required"/>
+		<property name="forgeProjectVersionRepository" ref="forgeProjectVersionRepository"/>
+	</bean>
+	<service ref="forgeProjectVersionService" interface="com.jeet.hub.forge.domain.base.service.api.project.version.ForgeProjectVersionService" />
+	
+	<bean id="forgeProjectVersionModuleService" class="com.jeet.hub.forge.domain.base.service.impl.project.version.ForgeProjectVersionModuleServiceImpl">
+		<tx:transaction method="*" value="Required"/>
+		<property name="forgeProjectModuleService" ref="forgeProjectModuleService"/>
+	</bean>
+	<service ref="forgeProjectVersionModuleService" interface="com.jeet.hub.forge.domain.base.service.api.project.version.ForgeProjectVersionModuleService" />
+	
+	<!-- ForgeProjectRule -->
+	<bean id="forgeProjectRuleService" class="com.jeet.hub.forge.domain.base.service.impl.project.rule.ForgeProjectRuleServiceImpl">
+		<tx:transaction method="*" value="Required"/>
+		<property name="forgeProjectRuleRepository" ref="forgeProjectRuleRepository"/>
+	</bean>
+	<service ref="forgeProjectRuleService" interface="com.jeet.hub.forge.domain.base.service.api.project.rule.ForgeProjectRuleService" />
+	
+	<!-- ForgeProject items service -->
+	<bean id="itemUniqueIdentifierService"
+		class="com.jeet.hub.forge.domain.base.service.impl.project.item.ItemUniqueIdentifierServiceImpl">
+		<tx:transaction method="*" value="Required"/>
+		<property name="itemUniqueIdentifierRepository" ref="itemUniqueIdentifierRepository" />
+	</bean> 
+	<service ref="itemUniqueIdentifierService" interface="com.jeet.hub.forge.domain.base.service.api.project.item.ItemUniqueIdentifierService" />
+
+</blueprint>            

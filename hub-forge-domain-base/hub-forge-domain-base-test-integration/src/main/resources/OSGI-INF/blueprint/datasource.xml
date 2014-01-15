@@ -1,0 +1,25 @@
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                default-activation="lazy">
+  
+   <bean id="dataSourceXA" class="org.postgresql.xa.PGXADataSource">
+      <property name="serverName" value="localhost/jeet-hub-forge"/>
+      <property name="user" value="jeet"/>
+      <property name="password" value="jeet"/>
+  </bean>
+  
+  <bean id="dataSource" class="org.postgresql.ds.PGPoolingDataSource" destroy-method="close">
+      <property name="serverName" value="localhost/jeet-hub-forge"/>
+      <property name="user" value="jeet"/>
+      <property name="password" value="jeet"/>
+      <property name="initialConnections" value="2"/>
+      <property name="maxConnections" value="4" />
+  </bean>
+  
+  <service interface="javax.sql.DataSource" ref="dataSource">
+    <service-properties>
+            <entry key="osgi.jndi.service.name" value="jdbc/db"/>
+    </service-properties>
+  </service>
+  
+</blueprint>

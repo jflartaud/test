@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:jpa="http://aries.apache.org/xmlns/jpa/v1.0.0"
+           xmlns:tx="http://aries.apache.org/xmlns/transactions/v1.0.0"
+           xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0"
+           xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           default-activation="lazy">
+
+	<!-- Forge -->
+	<bean id="forgeRepositoryFactory"
+          class="com.jeet.domain.base.service.repository.jpa.JeetJpaRepositoryFactoryBean"
+          init-method="afterPropertiesSet">
+        <jpa:context property="entityManager" unitname="jeet-core-pu"/>
+        <property name="repositoryInterface"
+                  value="com.jeet.hub.forge.domain.base.service.impl.repository.ForgeRepository"/>
+    </bean>
+
+    <bean id="forgeRepository" factory-ref="forgeRepositoryFactory"
+          factory-method="getObject">
+        <tx:transaction method="*" value="Required"/>
+    </bean>
+
+	<!-- ForgeInstance -->
+	<bean id="forgeInstanceRepositoryFactory"
+          class="com.jeet.domain.base.service.repository.jpa.JeetJpaRepositoryFactoryBean"
+          init-method="afterPropertiesSet">
+        <jpa:context property="entityManager" unitname="jeet-core-pu"/>
+        <property name="repositoryInterface"
+                  value="com.jeet.hub.forge.domain.base.service.impl.repository.ForgeInstanceRepository"/>
+    </bean>
+
+    <bean id="forgeInstanceRepository" factory-ref="forgeInstanceRepositoryFactory"
+          factory-method="getObject">
+        <tx:transaction method="*" value="Required"/>
+    </bean>
+    
+     <!-- ForgeElement -->
+    <bean id="forgeElementRepositoryFactory"
+          class="com.jeet.domain.base.service.repository.jpa.JeetJpaRepositoryFactoryBean"
+          init-method="afterPropertiesSet">
+        <jpa:context property="entityManager" unitname="jeet-core-pu"/>
+        <property name="repositoryInterface"
+                  value="com.jeet.hub.forge.domain.base.service.impl.forge.element.repository.ForgeElementRepository"/>
+    </bean>
+
+    <bean id="forgeElementRepository" factory-ref="forgeElementRepositoryFactory"
+          factory-method="getObject">
+        <tx:transaction method="*" value="Required"/>
+    </bean>
+    
+     <!-- ForgeProjectModule -->
+    <bean id="forgeProjectModuleRepositoryFactory"
+          class="com.jeet.domain.base.service.repository.jpa.JeetJpaRepositoryFactoryBean"
+          init-method="afterPropertiesSet">
+        <jpa:context property="entityManager" unitname="jeet-core-pu"/>
+        <property name="repositoryInterface"
+                  value="com.jeet.hub.forge.domain.base.service.impl.project.repository.ForgeProjectModuleRepository"/>
+    </bean>
+
+    <bean id="forgeProjectModuleRepository" factory-ref="forgeProjectModuleRepositoryFactory"
+          factory-method="getObject">
+        <tx:transaction method="*" value="Required"/>
+    </bean>
+    
+     <!-- ForgeProject -->
+    <bean id="forgeProjectRepositoryFactory"
+          class="com.jeet.domain.base.service.repository.jpa.JeetJpaRepositoryFactoryBean"
+          init-method="afterPropertiesSet">
+        <jpa:context property="entityManager" unitname="jeet-core-pu"/>
+        <property name="repositoryInterface"
+                  value="com.jeet.hub.forge.domain.base.service.impl.project.repository.ForgeProjectRepository"/>
+    </bean>
+
+    <bean id="forgeProjectRepository" factory-ref="forgeProjectRepositoryFactory"
+          factory-method="getObject">
+        <tx:transaction method="*" value="Required"/>
+    </bean>
+    
+     <!-- TechnicalComponent within ForgeContext -->
+    <bean id="forgeTechnicalComponentRepositoryFactory"
+          class="com.jeet.domain.base.service.repository.jpa.JeetJpaRepositoryFactoryBean"
+          init-method="afterPropertiesSet">
+        <jpa:context property="entityManager" unitname="jeet-core-pu"/>
+        <property name="repositoryInterface"
+                  value="com.jeet.hub.forge.domain.base.service.impl.project.repository.ForgeTechnicalComponentRepository"/>
+    </bean>
+
+    <bean id="forgeTechnicalComponentRepository" factory-ref="forgeTechnicalComponentRepositoryFactory"
+          factory-method="getObject">
+        <tx:transaction method="*" value="Required"/>
+    </bean>
+    
+     <!-- ItemUniqueIdentifier -->
+    <bean id="itemUniqueIdentifierRepositoryFactory"
+          class="com.jeet.domain.base.service.repository.jpa.JeetJpaRepositoryFactoryBean"
+          init-method="afterPropertiesSet">
+        <jpa:context property="entityManager" unitname="jeet-core-pu"/>
+        <property name="repositoryInterface"
+                  value="com.jeet.hub.forge.domain.base.service.impl.project.item.repository.ItemUniqueIdentifierRepository"/>
+    </bean>
+
+    <bean id="itemUniqueIdentifierRepository" factory-ref="itemUniqueIdentifierRepositoryFactory"
+          factory-method="getObject">
+        <tx:transaction method="*" value="Required"/>
+    </bean>
+    
+     <!-- ForgeProjectRule -->
+    <bean id="forgeProjectRuleRepositoryFactory"
+          class="com.jeet.domain.base.service.repository.jpa.JeetJpaRepositoryFactoryBean"
+          init-method="afterPropertiesSet">
+        <jpa:context property="entityManager" unitname="jeet-core-pu"/>
+        <property name="repositoryInterface"
+                  value="com.jeet.hub.forge.domain.base.service.impl.project.rule.repository.ForgeProjectRuleRepository"/>
+    </bean>
+
+    <bean id="forgeProjectRuleRepository" factory-ref="forgeProjectRuleRepositoryFactory"
+          factory-method="getObject">
+        <tx:transaction method="*" value="Required"/>
+    </bean>
+    
+     <!-- ForgeProjectVersion -->
+    <bean id="forgeProjectVersionRepositoryFactory"
+          class="com.jeet.domain.base.service.repository.jpa.JeetJpaRepositoryFactoryBean"
+          init-method="afterPropertiesSet">
+        <jpa:context property="entityManager" unitname="jeet-core-pu"/>
+        <property name="repositoryInterface"
+                  value="com.jeet.hub.forge.domain.base.service.impl.project.version.repository.ForgeProjectVersionRepository"/>
+    </bean>
+
+    <bean id="forgeProjectVersionRepository" factory-ref="forgeProjectVersionRepositoryFactory"
+          factory-method="getObject">
+        <tx:transaction method="*" value="Required"/>
+    </bean>
+</blueprint>            

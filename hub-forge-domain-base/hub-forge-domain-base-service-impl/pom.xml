@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.jeet.hub.forge.domain.base</groupId>
+		<artifactId>jeet-hub-forge-domain-base-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../jeet-hub-forge-domain-base-parent/pom.xml</relativePath>
+	</parent>
+	<artifactId>jeet-hub-forge-domain-base-service-impl</artifactId>
+	<name>jeet-hub-forge-domain-base-service-impl</name>
+	<properties>
+		 <org.activity.version>5.14</org.activity.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>com.jeet.domain.base</groupId>
+			<artifactId>jeet-domain-base-service-impl</artifactId>
+			<version>${jeet.domain.base.version}</version>
+		</dependency>
+        <dependency>
+			<groupId>com.jeet.hub.forge.domain.base</groupId>
+			<artifactId>jeet-hub-forge-domain-base-model</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.jeet.hub.forge.domain.base</groupId>
+			<artifactId>jeet-hub-forge-domain-base-service-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+        <dependency>
+            <groupId>com.jeet.domain.base</groupId>
+            <artifactId>jeet-domain-base-service-repository-osgi</artifactId>
+            <version>${jeet.domain.base.version}</version>
+        </dependency>
+
+		 <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-engine</artifactId>
+            <version>${org.activity.version}</version>
+        </dependency>
+        
+         <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-osgi</artifactId>
+            <version>${org.activity.version}</version>
+        </dependency>
+
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.enterprise</artifactId>
+			<version>4.2.0</version>
+		</dependency>
+            
+
+		 <!-- Test -->
+        <dependency>
+            <groupId>com.jeet.domain.base</groupId>
+            <artifactId>jeet-domain-base-test-unit</artifactId>
+            <version>${jeet.domain.base.version}</version>
+            <scope>test</scope>
+        </dependency>
+         <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <build>
+		<resources>
+			<!-- Les sources sont directement intégrées au JAR , afin de bénéficier 
+				du refresh des classes du domainmodel en mode shell GWT -->
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.java</include>
+					<include>**/*.gwt.xml</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+            </resource>
+		</resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>manifest</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Import-Package>
+                            javax.persistence,
+                            javax.persistence.criteria,
+                            org.aopalliance.aop,
+                            org.springframework.aop,
+                            org.springframework.aop.framework,
+                            org.springframework.data.*,
+                            org.springframework.data.jpa.domain,
+                            org.eclipse.persistence.jpa.jpql.parser,
+                            com.sencha.gxt.data.shared.loader.*,
+                            com.jeet.domain.base.service.impl.*,
+                            com.jeet.domain.base.service.repository.jpa.*,
+                            com.jeet.hub.domain.base.model.*,
+                            com.jeet.hub.forge.domain.base.model.*,
+                            com.jeet.hub.forge.domain.base.service.api.*
+                        </Import-Package>
+                         <DynamicImport-Package>*</DynamicImport-Package>
+                        <!-- <DynamicImport-Package>*</DynamicImport-Package> -->
+                    </instructions>
+                </configuration>
+            </plugin>
+            <plugin>
+            	<groupId>org.apache.maven.plugins</groupId>
+            	<artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+	</build>
+</project>
